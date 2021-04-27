@@ -33,6 +33,7 @@ export let action: ActionFunction = async ({ request, params }) => {
         },
       });
       await new Promise((res) => setTimeout(res, 300));
+      break;
     }
     case "put": {
       await prisma.task.update({
@@ -43,6 +44,7 @@ export let action: ActionFunction = async ({ request, params }) => {
           complete: JSON.parse(body.get("complete")!),
         },
       });
+      break;
     }
   }
 
@@ -54,6 +56,12 @@ const projectWithTasks = Prisma.validator<Prisma.ProjectArgs>()({
 });
 
 type ProjectWithTasks = Prisma.ProjectGetPayload<typeof projectWithTasks>;
+
+export function meta({ data }: { data: ProjectWithTasks }) {
+  return {
+    title: `${data.title} (${data.tasks.filter((t) => !t.complete).length})`,
+  };
+}
 
 export default function Project() {
   let project = useRouteData<ProjectWithTasks>();
@@ -70,7 +78,7 @@ export default function Project() {
   }, [pendingFormSubmit]);
 
   return (
-    <div>
+    <main>
       <h2>{project.title}</h2>
       <ul>
         {project.tasks.map((task) => (
@@ -85,7 +93,7 @@ export default function Project() {
                       id: String(task.id),
                       complete: String(event.target.checked),
                     },
-                    { method: "put" }
+                    { method: "put", replace: true }
                   );
                 }}
               />{" "}
@@ -94,8 +102,11 @@ export default function Project() {
           </li>
         ))}
         {pendingFormSubmit && pendingFormSubmit.method === "post" && (
-          <li style={{ color: "pink" }}>
-            {pendingFormSubmit.data.get("title")}
+          <li>
+            <label>
+              <input disabled type="checkbox" checked={false} />{" "}
+              {pendingFormSubmit.data.get("title")}
+            </label>
           </li>
         )}
         <li>
@@ -112,6 +123,6 @@ export default function Project() {
           </Form>
         </li>
       </ul>
-    </div>
+    </main>
   );
 }

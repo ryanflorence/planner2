@@ -1,13 +1,61 @@
+:root {
+  --base00: #f2f2f2;
+  --base01: #e0e0e0;
+  --base02: #d6d6d6;
+  --base03: #8e908c;
+  --base04: #969896;
+  --base05: #4d4d4c;
+  --base06: #282a2e;
+  --base07: #1d1f21;
+  --base08: #f36671;
+  --base09: #f5871f;
+  --base0A: #d2b538;
+  --base0B: #1fc46c;
+  --base0C: #30b9b5;
+  --base0D: #3c70b5;
+  --base0E: #8959a8;
+  --base0F: #a3685a;
+}
+
 :focus:not(:focus-visible) {
   outline: none;
 }
 
 body {
-  font-family: sans-serif;
+  font-family: Inter, sans-serif;
+  display: grid;
+  height: 100vh;
+  grid-template-rows: auto 1fr;
+  margin: 0;
+  background: white;
+  overflow: hidden;
 }
 
-footer {
-  text-align: center;
-  color: #ccc;
-  padding-top: 80px;
+body > header {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  background: var(--base0C);
+}
+
+body > header > nav > a {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+body > header > nav > a:hover {
+  background: hsla(0, 0%, 100%, 0.1);
+}
+body > header > nav > a.active {
+  background: hsla(0, 0%, 0%, 0.075);
+  /* background: var(--base08); */
+}
+
+.icon {
+  height: 1rem;
+  width: 1rem;
 }

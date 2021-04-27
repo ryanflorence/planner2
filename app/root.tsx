@@ -1,6 +1,6 @@
 import type { LinksFunction } from "@remix-run/react";
 import { Meta, Links, Scripts, useLiveReload } from "@remix-run/react";
-import { Link, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 
 import stylesUrl from "./styles/global.css";
 
@@ -16,13 +16,24 @@ export default function App() {
       <head>
         <meta charSet="utf-8" />
         <link rel="icon" href="/favicon.png" type="image/png" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;800&display=swap"
+          rel="stylesheet"
+        />
+
         <Meta />
         <Links />
       </head>
       <body>
         <header>
-          <Link to="/">Dashboard</Link> <Link to="/projects">Projects</Link>{" "}
-          <Link to="/account">Account</Link>
+          <nav>
+            <NavLink to="/" end>
+              Dashboard
+            </NavLink>{" "}
+            <NavLink to="/projects">Projects</NavLink>{" "}
+            <NavLink to="/account">Account</NavLink>
+          </nav>
         </header>
         <Outlet />
         <Scripts />

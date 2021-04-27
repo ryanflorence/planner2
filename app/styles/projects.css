@@ -1,0 +1,87 @@
+#projects {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  height: 100%;
+}
+
+#projects nav {
+  padding: 1rem;
+  border-right: solid 1px var(--base01);
+  overflow: auto;
+  height: 100%;
+}
+
+#projects nav small {
+  font-size: 0.75rem;
+  background: var(--base00);
+  padding: 0.5em 0.75em;
+  border-radius: 1em;
+}
+#projects nav a.active small {
+  background: white;
+}
+
+#projects .page {
+  padding: 1rem;
+}
+
+#projects nav a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  margin: 0.25rem 0;
+  text-decoration: none;
+  color: var(--base05);
+  font-weight: 500;
+  border-radius: 0.5rem;
+}
+
+#projects nav a:hover {
+  background: var(--base01);
+}
+
+#projects nav a.active {
+  background: var(--base00);
+}
+
+#projects nav form {
+  margin-top: 1rem;
+  border-top: solid 1px var(--base00);
+  padding: 1rem;
+}
+
+#projects nav button,
+#projects nav input {
+  font: inherit;
+  font-size: 0.9rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
+}
+#projects nav button {
+  margin-left: 0.25rem;
+  border: none;
+  background: var(--base08);
+  color: white;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+#projects nav input {
+  border: solid 1px var(--base02);
+}
+
+main h2 {
+  color: var(--base05);
+  margin: 0.75rem 0;
+}
+
+main ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+main li {
+  margin: 0.5rem 0;
+}

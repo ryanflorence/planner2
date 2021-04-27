@@ -1,9 +1,15 @@
 import { Prisma, Project } from ".prisma/client";
 import type { LoaderFunction, ActionFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
-import { Link, useRouteData } from "@remix-run/react";
+import { useRouteData } from "@remix-run/react";
+import { NavLink } from "react-router-dom";
 import { Outlet } from "react-router";
 import { prisma } from "../db";
+import styles from "../styles/projects.css";
+
+export function links() {
+  return [{ rel: "stylesheet", href: styles }];
+}
 
 export let loader: LoaderFunction = async () => {
   return prisma.project.findMany({
@@ -16,12 +22,12 @@ export let loader: LoaderFunction = async () => {
 export let action: ActionFunction = async ({ request }) => {
   let text = await request.text();
   let body = new URLSearchParams(text);
-  await prisma.project.create({
+  let project = await prisma.project.create({
     data: {
       title: body.get("title")!,
     },
   });
-  return redirect("/projects");
+  return redirect(`/projects/${project.id}`);
 };
 
 const projectWithTasks = Prisma.validator<Prisma.ProjectArgs>()({
@@ -33,49 +39,30 @@ type ProjectWithTasks = Prisma.ProjectGetPayload<typeof projectWithTasks>;
 export default function Projects() {
   let projects = useRouteData<ProjectWithTasks[]>();
   return (
-    <div
-      style={{
-        display: "flex",
-      }}
-    >
-      <div
-        style={{
-          width: "300px",
-          height: "100vh",
-          overflow: "auto",
-          background: "#eee",
-          boxSizing: "border-box",
-          padding: "10px",
-        }}
-      >
-        <h1>Projects</h1>
-        <ul>
+    <div id="projects">
+      <nav>
+        <div>
           {projects.map((project) => (
-            <li key={project.id}>
-              <Link to={String(project.id)}>
-                {project.title} (
-                {project.tasks.filter((task) => !task.complete).length})
-              </Link>
-            </li>
+            <NavLink to={String(project.id)}>
+              {project.title}{" "}
+              <small>
+                {project.tasks.filter((task) => !task.complete).length}/
+                {project.tasks.length}
+              </small>
+            </NavLink>
           ))}
-        </ul>
+        </div>
         <form method="post" action="/projects">
-          <fieldset>
-            <legend>New Project</legend>
-            <p>
-              <label>
-                Title:
-                <br />
-                <input type="text" name="title" />
-              </label>
-            </p>
-            <p>
-              <button type="submit">Create</button>
-            </p>
-          </fieldset>
+          <input
+            type="text"
+            name="title"
+            aria-label="New projects"
+            placeholder="New Project"
+          />
+          <button type="submit">Add</button>
         </form>
-      </div>
-      <div>
+      </nav>
+      <div className="page">
         <Outlet />
       </div>
     </div>
