@@ -52,6 +52,7 @@ export default function Projects() {
             </NavLink>
           ))}
         </div>
+        {projects.length === 0 && <p>Add a project below ⬇</p>}
         <form method="post" action="/projects">
           <input
             type="text"

@@ -4,6 +4,10 @@
   height: 100%;
 }
 
+#projects nav p {
+  text-align: center;
+}
+
 #projects nav {
   padding: 1rem;
   border-right: solid 1px var(--base01);
@@ -48,11 +52,11 @@
 #projects nav form {
   margin-top: 1rem;
   border-top: solid 1px var(--base00);
-  padding: 1rem;
+  padding: 1.5rem 1rem;
 }
 
 #projects nav button,
-#projects nav input {
+#projects nav input[type="text"] {
   font: inherit;
   font-size: 0.9rem;
   padding: 0.5rem 0.75rem;
@@ -67,7 +71,7 @@
   text-transform: uppercase;
 }
 
-#projects nav input {
+#projects nav input[type="text"] {
   border: solid 1px var(--base02);
 }
 
@@ -83,5 +87,18 @@ main ul {
 }
 
 main li {
-  margin: 0.5rem 0;
+  margin: 1rem 0;
+}
+
+main input[type="text"] {
+  width: 20rem;
+  border: none;
+  border-bottom: solid 2px var(--base04);
+  font: inherit;
+  padding: 0 0 0.25rem 0;
+}
+
+main input[type="text"]:focus {
+  outline: none;
+  border-bottom-color: var(--base08);
 }

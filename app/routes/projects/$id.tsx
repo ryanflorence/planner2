@@ -112,6 +112,7 @@ export default function Project() {
         <li>
           <Form method="post">
             <label>
+              <input disabled type="checkbox" checked={false} />{" "}
               <input
                 type="text"
                 name="title"
