@@ -17,8 +17,7 @@ export let loader: LoaderFunction = () => {
 
 export let meta: MetaFunction = () => {
   return {
-    title: "Remix Starter",
-    description: "Welcome to remix!",
+    title: "Tasks!",
   };
 };
 
