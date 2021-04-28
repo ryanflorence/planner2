@@ -1,35 +1,35 @@
-#projects {
+section {
   display: grid;
   grid-template-columns: auto 1fr;
   height: 100%;
 }
 
-#projects nav p {
+section nav p {
   text-align: center;
 }
 
-#projects nav {
+section nav {
   padding: 1rem;
   border-right: solid 1px var(--base01);
   overflow: auto;
   height: 100%;
 }
 
-#projects nav small {
+section nav small {
   font-size: 0.75rem;
   background: var(--base00);
   padding: 0.5em 0.75em;
   border-radius: 1em;
 }
-#projects nav a.active small {
-  background: white;
+section nav a.active small {
+  background: var(--base00);
 }
 
-#projects .page {
-  padding: 1rem;
+main {
+  padding: 1rem 3rem;
 }
 
-#projects nav a {
+section nav a {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -41,38 +41,44 @@
   border-radius: 0.5rem;
 }
 
-#projects nav a:hover {
+section nav a:hover {
   background: var(--base01);
 }
 
-#projects nav a.active {
+section nav a.active {
   background: var(--base00);
 }
 
-#projects nav form {
-  margin-top: 1rem;
-  border-top: solid 1px var(--base00);
-  padding: 1.5rem 1rem;
+section nav form {
+  margin-top: 1.5rem;
+  border-top: solid 1px var(--base01);
+  padding: 1.5rem 0rem;
 }
 
-#projects nav button,
-#projects nav input[type="text"] {
+section nav button,
+section nav input[type="text"] {
   font: inherit;
   font-size: 0.9rem;
-  padding: 0.5rem 0.75rem;
+  padding: 0.5rem 1rem;
   border-radius: 0.25rem;
 }
-#projects nav button {
+section nav button {
+  cursor: pointer;
   margin-left: 0.25rem;
   border: none;
   background: var(--base08);
-  color: white;
+  color: var(--base00);
   font-weight: 500;
   text-transform: uppercase;
 }
 
-#projects nav input[type="text"] {
+section nav input[type="text"] {
   border: solid 1px var(--base02);
+  background: var(--base01);
+  color: inherit;
+}
+section nav input[type="text"]:focus {
+  background: var(--base00);
 }
 
 main h2 {
@@ -96,9 +102,15 @@ main input[type="text"] {
   border-bottom: solid 1px var(--base04);
   font: inherit;
   padding: 0 0 0.25rem 0;
+  background: transparent;
+  color: inherit;
 }
 
 main input[type="text"]:focus {
   outline: none;
   border-bottom-color: var(--base08);
+}
+
+main form {
+  display: inline;
 }

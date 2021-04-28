@@ -1,27 +1,27 @@
-import { Prisma, Project } from ".prisma/client";
-import type { LoaderFunction, ActionFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
+import type { LoaderFunction, ActionFunction } from "@remix-run/node";
 import { useRouteData } from "@remix-run/react";
-import { NavLink } from "react-router-dom";
-import { Outlet } from "react-router";
-import { prisma } from "../db";
+import { NavLink, Outlet } from "react-router-dom";
 import styles from "../styles/projects.css";
+import { prisma } from "../db";
+import { Project } from ".prisma/client";
+import { ProjectWithTasks } from "../types";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
 }
 
 export let loader: LoaderFunction = async () => {
-  return prisma.project.findMany({
+  let projects = await prisma.project.findMany({
     include: {
       tasks: true,
     },
   });
+  return projects;
 };
 
 export let action: ActionFunction = async ({ request }) => {
-  let text = await request.text();
-  let body = new URLSearchParams(text);
+  let body = new URLSearchParams(await request.text());
   let project = await prisma.project.create({
     data: {
       title: body.get("title")!,
@@ -30,42 +30,31 @@ export let action: ActionFunction = async ({ request }) => {
   return redirect(`/projects/${project.id}`);
 };
 
-const projectWithTasks = Prisma.validator<Prisma.ProjectArgs>()({
-  include: { tasks: true },
-});
-
-type ProjectWithTasks = Prisma.ProjectGetPayload<typeof projectWithTasks>;
-
 export default function Projects() {
   let projects = useRouteData<ProjectWithTasks[]>();
   return (
-    <div id="projects">
+    <section>
       <nav>
-        <div>
-          {projects.map((project) => (
-            <NavLink to={String(project.id)}>
-              {project.title}{" "}
-              <small>
-                {project.tasks.filter((task) => !task.complete).length}/
-                {project.tasks.length}
-              </small>
-            </NavLink>
-          ))}
-        </div>
-        {projects.length === 0 && <p>Add a project below ⬇</p>}
-        <form method="post" action="/projects">
+        {projects.map((project, index) => (
+          <NavLink key={index} to={String(project.id)}>
+            {project.title}{" "}
+            <small>
+              {project.tasks.filter((t) => t.complete).length}/
+              {project.tasks.length}
+            </small>
+          </NavLink>
+        ))}
+        <form action="/projects" method="post">
           <input
             type="text"
+            placeholder="New project"
+            aria-label="New project"
             name="title"
-            aria-label="New projects"
-            placeholder="New Project"
           />
           <button type="submit">Add</button>
         </form>
       </nav>
-      <div className="page">
-        <Outlet />
-      </div>
-    </div>
+      <Outlet />
+    </section>
   );
 }

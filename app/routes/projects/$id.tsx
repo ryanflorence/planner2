@@ -1,16 +1,17 @@
-import { Prisma, Project } from ".prisma/client";
-import { LoaderFunction, ActionFunction, redirect } from "@remix-run/node";
+import type { LoaderFunction, ActionFunction } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 import {
-  useRouteData,
   Form,
   usePendingFormSubmit,
+  useRouteData,
   useSubmit,
 } from "@remix-run/react";
 import { useEffect, useRef } from "react";
 import { prisma } from "../../db";
+import type { ProjectWithTasks } from "../../types";
 
 export let loader: LoaderFunction = async ({ params }) => {
-  let project = await prisma.project.findUnique({
+  return prisma.project.findUnique({
     where: {
       id: parseInt(params.id),
     },
@@ -18,7 +19,6 @@ export let loader: LoaderFunction = async ({ params }) => {
       tasks: true,
     },
   });
-  return project;
 };
 
 export let action: ActionFunction = async ({ request, params }) => {
@@ -28,11 +28,10 @@ export let action: ActionFunction = async ({ request, params }) => {
     case "post": {
       await prisma.task.create({
         data: {
+          title: body.get("title")!,
           projectId: parseInt(params.id),
-          title: body.get("title") || "No title",
         },
       });
-      await new Promise((res) => setTimeout(res, 300));
       break;
     }
     case "put": {
@@ -44,36 +43,21 @@ export let action: ActionFunction = async ({ request, params }) => {
           complete: JSON.parse(body.get("complete")!),
         },
       });
-      break;
     }
   }
 
   return redirect(`/projects/${params.id}`);
 };
 
-const projectWithTasks = Prisma.validator<Prisma.ProjectArgs>()({
-  include: { tasks: true },
-});
-
-type ProjectWithTasks = Prisma.ProjectGetPayload<typeof projectWithTasks>;
-
-export function meta({ data }: { data: ProjectWithTasks }) {
-  return {
-    title: `${data.title} (${data.tasks.filter((t) => !t.complete).length})`,
-  };
-}
-
 export default function Project() {
   let project = useRouteData<ProjectWithTasks>();
-  let inputRef = useRef<HTMLInputElement>(null);
   let pendingFormSubmit = usePendingFormSubmit();
+  let inputRef = useRef<HTMLInputElement>(null);
   let submit = useSubmit();
 
   useEffect(() => {
     if (pendingFormSubmit) {
-      if (inputRef.current) {
-        inputRef.current.value = "";
-      }
+      if (inputRef.current) inputRef.current.value = "";
     }
   }, [pendingFormSubmit]);
 
@@ -90,10 +74,10 @@ export default function Project() {
                 onChange={(event) => {
                   submit(
                     {
-                      id: String(task.id),
                       complete: String(event.target.checked),
+                      id: String(task.id),
                     },
-                    { method: "put", replace: true }
+                    { method: "put" }
                   );
                 }}
               />{" "}
@@ -104,23 +88,21 @@ export default function Project() {
         {pendingFormSubmit && pendingFormSubmit.method === "post" && (
           <li>
             <label>
-              <input disabled type="checkbox" checked={false} />{" "}
+              <input type="checkbox" disabled />{" "}
               {pendingFormSubmit.data.get("title")}
             </label>
           </li>
         )}
         <li>
+          <input type="checkbox" disabled />{" "}
           <Form method="post">
-            <label>
-              <input disabled type="checkbox" checked={false} />{" "}
-              <input
-                type="text"
-                name="title"
-                placeholder="New task"
-                aria-label="new task"
-                ref={inputRef}
-              />
-            </label>
+            <input
+              ref={inputRef}
+              type="text"
+              placeholder="New task"
+              aria-label="New task"
+              name="title"
+            />
           </Form>
         </li>
       </ul>

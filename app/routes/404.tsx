@@ -1,4 +1,9 @@
 import type { MetaFunction } from "@remix-run/react";
+import styles from "../styles/404.css";
+
+export function links() {
+  return [{ rel: "stylesheet", href: styles }];
+}
 
 export let meta: MetaFunction = () => {
   return { title: "Ain't nothing here" };
@@ -6,8 +11,9 @@ export let meta: MetaFunction = () => {
 
 export default function FourOhFour() {
   return (
-    <div>
-      <h1>Oops, we don't recognize that url.</h1>
-    </div>
+    <main>
+      <h1>Oops!</h1>
+      <p>Sorry, we don't recognize that url.</p>
+    </main>
   );
 }

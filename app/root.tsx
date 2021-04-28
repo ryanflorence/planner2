@@ -1,12 +1,8 @@
-import type { LinksFunction } from "@remix-run/react";
 import { Meta, Links, Scripts } from "@remix-run/react";
 import { NavLink, Outlet } from "react-router-dom";
-
-import stylesUrl from "./styles/global.css";
-
-export let links: LinksFunction = () => {
-  return [{ rel: "stylesheet", href: stylesUrl }];
-};
+import styles from "./styles/global.css";
+import light from "./styles/light.css";
+import dark from "./styles/dark.css";
 
 function Document({ children }: { children: React.ReactNode }) {
   return (
@@ -19,7 +15,17 @@ function Document({ children }: { children: React.ReactNode }) {
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;800&display=swap"
           rel="stylesheet"
         />
-
+        <link
+          rel="stylesheet"
+          href={light}
+          media="(prefers-color-scheme: light)"
+        />
+        <link
+          rel="stylesheet"
+          href={dark}
+          media="(prefers-color-scheme: dark)"
+        />
+        <link rel="stylesheet" href={styles} />
         <Meta />
         <Links />
       </head>
@@ -39,8 +45,8 @@ export default function App() {
         <nav>
           <NavLink to="/" end>
             Dashboard
-          </NavLink>{" "}
-          <NavLink to="/projects">Projects</NavLink>{" "}
+          </NavLink>
+          <NavLink to="/projects">Projects</NavLink>
           <NavLink to="/account">Account</NavLink>
         </nav>
       </header>
@@ -50,23 +56,10 @@ export default function App() {
 }
 
 export function ErrorBoundary({ error }: { error: Error }) {
+  console.error(error);
   return (
     <Document>
-      <div
-        style={{
-          fontFamily: "monospace",
-          background: "blue",
-          color: "white",
-          textAlign: "center",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100vh",
-          fontSize: "2rem",
-          paddingBottom: "10rem",
-          boxSizing: "border-box",
-        }}
-      >
+      <div className="error">
         <div>
           <h1>Error</h1>
           <p>{error.message}</p>

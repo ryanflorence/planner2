@@ -25,6 +25,6 @@ model Task {
   title     String
   complete  Boolean  @default(false)
 
-  project   Project? @relation(fields: [projectId], references: [id])
-  projectId Int?
+  project   Project @relation(fields: [projectId], references: [id])
+  projectId Int
 }
