@@ -9,7 +9,6 @@
   - Open up `root.tsx`
   - Remix gives you control
   - add global styles
-  - add font from google
 
 - What's Outlet?
 
@@ -26,7 +25,7 @@
   - error! (need export)
     - error boundary
   - back to links
-    - watch css load/unload
+    - watch css load/unload projects/404
     - remix blocks to avoid FOUC
 
 - Make projects page
@@ -37,6 +36,8 @@
     ```
   - hardcode projects in the component
   - move to loader
+    - look at sources
+    - moved from source code to data
   - bring in prisma
   - db query is empty! how to add records?
 
@@ -51,16 +52,15 @@
 - Nested Routes
 
   - add `projects/$id`
+  - Outlet
   - params
 
 - Add tasks
 
-  - Add type w/ include
   - We aren't even using JS
-  - stop rendering js
   - redirect to project
   - HTML + HTTP, fundamentals
-  - Why did we stop?
+  - Why did we start doing onSubmit+fetch and stuff?
     - Annoying to have to go focus the input to add new things
     - Clicking the checkboxes
     - Scroll positions in sidebar (our docs)
@@ -68,11 +68,12 @@
 
 - use `<Form>`
 
+  - add JS
   - clear out input with useRef
   - feels junky, slow it down
   - disable it?
-    - can't type the next
-    - messes up a11y
+    - can't type the next one
+    - messes up a11y, focus
   - need optimistic/pending UI!
   - still works w/o JS
 
@@ -81,7 +82,7 @@
   - useSubmit
   - put
   - bouncy thing
-  - set default value
+  - set default value on checkboxes
 
 - Add counts to sidebar
 

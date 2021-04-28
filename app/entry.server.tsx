@@ -1,5 +1,5 @@
 import ReactDOMServer from "react-dom/server";
-import { RemixServer as Remix } from "@remix-run/react";
+import { RemixServer } from "@remix-run/react";
 import type { EntryContext } from "@remix-run/node";
 
 export default function handleRequest(
@@ -9,14 +9,12 @@ export default function handleRequest(
   remixContext: EntryContext
 ) {
   let markup = ReactDOMServer.renderToString(
-    <Remix context={remixContext} url={request.url} />
+    <RemixServer context={remixContext} url={request.url} />
   );
 
+  responseHeaders.append("Content-Type", "text/html");
   return new Response("<!DOCTYPE html>" + markup, {
     status: responseStatusCode,
-    headers: {
-      ...Object.fromEntries(responseHeaders),
-      "Content-Type": "text/html"
-    }
+    headers: responseHeaders,
   });
 }
