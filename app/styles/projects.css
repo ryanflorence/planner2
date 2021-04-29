@@ -17,11 +17,15 @@ section nav {
 
 section nav small {
   font-size: 0.75rem;
-  background: var(--base00);
+  background: var(--base01);
   padding: 0.5em 0.75em;
   border-radius: 1em;
 }
 section nav a.active small {
+  background: var(--base00);
+}
+
+section nav a:hover small {
   background: var(--base00);
 }
 
@@ -46,7 +50,7 @@ section nav a:hover {
 }
 
 section nav a.active {
-  background: var(--base00);
+  background: white;
 }
 
 section nav form {

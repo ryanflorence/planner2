@@ -1,4 +1,4 @@
-import type { MetaFunction } from "@remix-run/react";
+import type { MetaFunction } from "remix";
 import styles from "../styles/404.css";
 
 export function links() {

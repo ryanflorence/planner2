@@ -1,5 +1,6 @@
-import { Meta, Links } from "@remix-run/react";
-import { Outlet } from "react-router-dom";
+import { Meta, Links, Scripts } from "remix";
+import { NavLink, Outlet } from "react-router-dom";
+import styles from "./styles/global.css";
 
 function Document({ children }: { children: React.ReactNode }) {
   return (
@@ -9,11 +10,13 @@ function Document({ children }: { children: React.ReactNode }) {
         <Meta />
 
         <link rel="icon" href="/favicon.png" type="image/png" />
+        <link rel="stylesheet" href={styles} />
         <Links />
       </head>
       <body>
         {children}
         <LiveReload />
+        <Scripts />
       </body>
     </html>
   );
@@ -22,6 +25,15 @@ function Document({ children }: { children: React.ReactNode }) {
 export default function App() {
   return (
     <Document>
+      <header>
+        <nav>
+          <NavLink to="/" end>
+            Dashboard
+          </NavLink>
+          <NavLink to="/projects">Projects</NavLink>
+          <NavLink to="/about">About</NavLink>
+        </nav>
+      </header>
       <Outlet />
     </Document>
   );
@@ -42,7 +54,6 @@ export function ErrorBoundary({ error }: { error: Error }) {
 }
 
 function LiveReload() {
-  if (process.env.NODE_ENV !== "development") return null;
   return (
     <script
       dangerouslySetInnerHTML={{
