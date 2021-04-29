@@ -36,7 +36,6 @@
     ```
   - hardcode projects in the component
   - move to loader
-    - look at sources
     - moved from source code to data
   - bring in prisma
   - db query is empty! how to add records?
