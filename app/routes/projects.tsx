@@ -22,12 +22,12 @@ export async function loader() {
 // POST (PUT DELETE PATCH)
 export let action: ActionFunction = async ({ request }) => {
   let body = new URLSearchParams(await request.text());
-  await prisma.project.create({
+  let project = await prisma.project.create({
     data: {
       title: body.get("title")!,
     },
   });
-  return redirect("/projects");
+  return redirect(`/projects/${project.id}`);
 };
 
 export default function Projects() {
