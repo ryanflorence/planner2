@@ -103,7 +103,6 @@ main li {
 main input[type="text"] {
   width: 20rem;
   border: none;
-  border-bottom: solid 1px var(--base04);
   font: inherit;
   padding: 0 0 0.25rem 0;
   background: transparent;

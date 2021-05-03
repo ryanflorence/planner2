@@ -1,0 +1,12 @@
+main {
+  padding: 2rem;
+}
+
+[data-fade="false"] {
+  opacity: 0;
+}
+
+[data-fade="true"] {
+  transition: opacity 1000ms ease;
+  opacity: 1;
+}

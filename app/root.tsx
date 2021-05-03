@@ -1,27 +1,32 @@
-import { Meta, Links, Scripts, LiveReload } from "remix";
+import {
+  Meta,
+  Links,
+  Scripts,
+  LiveReload,
+  json,
+  useRouteData,
+} from "remix";
+import type { LoaderFunction } from "remix";
 import { NavLink, Outlet } from "react-router-dom";
 import styles from "./styles/global.css";
+import {
+  getSession,
+  commitSession,
+  requireUserSession,
+  getUserSession,
+} from "./session";
+
+export let loader: LoaderFunction = async ({ request }) => {
+  let userSession = await getUserSession(request);
+  return json({ userSession });
+};
 
 export default function App() {
+  let data = useRouteData();
+  console.log(data);
   return (
     <Document>
-      <Outlet />
-    </Document>
-  );
-}
-
-function Document({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en">
-      <head>
-        <meta charSet="utf-8" />
-        <Meta />
-
-        <link rel="stylesheet" href={styles} />
-        <link rel="icon" href="/favicon.png" type="image/png" />
-        <Links />
-      </head>
-      <body>
+      {data.userSession ? (
         <header>
           <nav>
             <NavLink to="/" end>
@@ -31,6 +36,41 @@ function Document({ children }: { children: React.ReactNode }) {
             <NavLink to="/about">About</NavLink>
           </nav>
         </header>
+      ) : (
+        <header>
+          <nav>
+            <NavLink to="/TODO">Sign up!</NavLink>
+          </nav>
+          <nav>
+            <NavLink to="/TODO">Order a sandwich!</NavLink>
+          </nav>
+        </header>
+      )}
+      <Outlet />
+    </Document>
+  );
+}
+
+function Document({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <head>
+        <meta charSet="utf-8" />
+        <Meta />
+
+        <link rel="stylesheet" href={styles} />
+        <link
+          rel="icon"
+          href="/favicon.png"
+          type="image/png"
+        />
+        <Links />
+      </head>
+      <body>
         {children}
         <LiveReload />
         <Scripts />

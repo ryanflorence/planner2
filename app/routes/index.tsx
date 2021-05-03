@@ -1,15 +1,19 @@
 import { Project } from ".prisma/client";
 import { Link, useRouteData } from "remix";
+import type { LoaderFunction } from "remix";
 import { prisma } from "../db";
+import { requireUserSession } from "../session";
 import styles from "../styles/index.css";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
 }
 
-export function loader() {
-  return prisma.project.findMany();
-}
+export let loader: LoaderFunction = ({ request }) => {
+  return requireUserSession(request, (session) => {
+    return prisma.project.findMany();
+  });
+};
 
 export default function Index() {
   let projects = useRouteData<Project[]>();
@@ -23,7 +27,9 @@ export default function Index() {
             <Sparkles />{" "}
             <span>
               You created{" "}
-              <Link to={`/projects/${project.id}`}>{project.title}</Link>
+              <Link to={`/projects/${project.id}`}>
+                {project.title}
+              </Link>
             </span>
           </li>
         ))}

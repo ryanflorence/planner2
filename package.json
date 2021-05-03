@@ -13,7 +13,6 @@
     "deploy": "flyctl deploy --build-arg REMIX_TOKEN=${REMIX_TOKEN}"
   },
   "dependencies": {
-    "remix": "0.0.0-experimental-2d01141",
     "@prisma/client": "^2.21.2",
     "@remix-run/express": "0.0.0-experimental-2d01141",
     "@remix-run/node": "0.0.0-experimental-2d01141",
@@ -21,7 +20,8 @@
     "@remix-run/serve": "0.0.0-experimental-2d01141",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-router-dom": "^6.0.0-beta.0"
+    "react-router-dom": "^6.0.0-beta.0",
+    "remix": "0.0.0-experimental-2d01141"
   },
   "devDependencies": {
     "@remix-run/dev": "0.0.0-experimental-2d01141",
@@ -32,6 +32,9 @@
   },
   "engines": {
     "node": "15"
+  },
+  "prettier": {
+    "printWidth": 60
   },
   "sideEffects": false
 }
