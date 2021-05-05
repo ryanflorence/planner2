@@ -23,7 +23,6 @@ export let loader: LoaderFunction = async ({ request }) => {
 
 export default function App() {
   let data = useRouteData();
-  console.log(data);
   return (
     <Document>
       {data.userSession ? (
@@ -51,11 +50,7 @@ export default function App() {
   );
 }
 
-function Document({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+function Document({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
@@ -63,11 +58,7 @@ function Document({
         <Meta />
 
         <link rel="stylesheet" href={styles} />
-        <link
-          rel="icon"
-          href="/favicon.png"
-          type="image/png"
-        />
+        <link rel="icon" href="/favicon.png" type="image/png" />
         <Links />
       </head>
       <body>

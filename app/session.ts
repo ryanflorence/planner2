@@ -1,8 +1,7 @@
+import { Session } from ".prisma/client";
 import type { LoaderFunction, Request } from "remix";
-import {
-  createCookieSessionStorage,
-  redirect,
-} from "remix";
+import { createCookieSessionStorage, redirect } from "remix";
+import { prisma } from "./db";
 
 // let secrets = process.env.COOKIE_SECRET;
 // if (!secrets) {
@@ -23,23 +22,25 @@ let {
 });
 
 export async function getUserSession(request: Request) {
-  let session = await getSession(
-    request.headers.get("Cookie")
-  );
+  let session = await getSession(request.headers.get("Cookie"));
   return session.get("user");
 }
 
 export async function requireUserSession(
   request: Request,
-  next: (session: string) => ReturnType<LoaderFunction>
+  next: (session: Session) => ReturnType<LoaderFunction>
 ) {
-  let session = await getSession(
-    request.headers.get("Cookie")
-  );
-  if (!session.get("user")) {
+  let session = await getSession(request.headers.get("Cookie"));
+  let sessionId = session.get("sessionId");
+  let userSession = await prisma.session.findUnique({
+    where: { id: sessionId },
+  });
+
+  if (!userSession) {
     return redirect("/login");
   }
-  return next(session.get("user"));
+
+  return next(userSession);
 }
 
 export { getSession, commitSession, destroySession };

@@ -90,9 +90,7 @@ export default function Login() {
             />
           </label>
           {session.emailError && (
-            <ErrorMessage>
-              {session.emailError}
-            </ErrorMessage>
+            <FadeIn>{session.emailError}</FadeIn>
           )}
         </p>
         <p>
@@ -107,9 +105,7 @@ export default function Login() {
             />
           </label>
           {session.passwordError && (
-            <ErrorMessage>
-              {session.passwordError}
-            </ErrorMessage>
+            <FadeIn>{session.passwordError}</FadeIn>
           )}
         </p>
         <p>
@@ -120,7 +116,7 @@ export default function Login() {
   );
 }
 
-function ErrorMessage({
+function FadeIn({
   children,
 }: {
   children: React.ReactNode;
@@ -133,8 +129,6 @@ function ErrorMessage({
     return () => clearTimeout(id);
   }, []);
   return (
-    <span aria-live="polite" data-fade={String(mounted)}>
-      {children}
-    </span>
+    <span data-fade={String(mounted)}>{children}</span>
   );
 }
