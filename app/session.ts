@@ -23,7 +23,14 @@ let {
 
 export async function getUserSession(request: Request) {
   let session = await getSession(request.headers.get("Cookie"));
-  return session.get("user");
+  let sessionId = session.get("sessionId");
+  if (!sessionId) {
+    return null;
+  }
+
+  return prisma.session.findUnique({
+    where: { id: sessionId },
+  });
 }
 
 export async function requireUserSession(
@@ -32,12 +39,23 @@ export async function requireUserSession(
 ) {
   let session = await getSession(request.headers.get("Cookie"));
   let sessionId = session.get("sessionId");
+
+  // no cookie
+  if (!sessionId) {
+    return redirect("/login");
+  }
+
   let userSession = await prisma.session.findUnique({
     where: { id: sessionId },
   });
 
+  // no db
   if (!userSession) {
-    return redirect("/login");
+    return redirect("/login", {
+      headers: {
+        "Set-Cookie": await destroySession(session),
+      },
+    });
   }
 
   return next(userSession);

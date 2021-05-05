@@ -144,7 +144,7 @@ export default function Signup() {
               autoComplete="false"
               type="email"
               defaultValue={session.email || "rpflorence@gmail.com"}
-              // required
+              required
               name="email"
             />
           </label>
@@ -157,7 +157,7 @@ export default function Signup() {
             <input
               autoComplete="false"
               type="password"
-              // required
+              required
               name="password"
               defaultValue={session.password || "password1"}
             />
@@ -167,13 +167,14 @@ export default function Signup() {
           )}
         </p>
         <p>
+          {/* TODO: checkbox to show password */}
           <label>
             Verify Password:
             <br />
             <input
               autoComplete="false"
               type="password"
-              // required
+              required
               name="verifyPassword"
               defaultValue={session.verifyPassword || "password1"}
             />

@@ -5,6 +5,7 @@ import {
   LiveReload,
   json,
   useRouteData,
+  Form,
 } from "remix";
 import type { LoaderFunction } from "remix";
 import { NavLink, Outlet } from "react-router-dom";
@@ -33,6 +34,9 @@ export default function App() {
             </NavLink>
             <NavLink to="/projects">Projects</NavLink>
             <NavLink to="/about">About</NavLink>
+            <Form method="post" action="/logout">
+              <button type="submit">Logout</button>
+            </Form>
           </nav>
         </header>
       ) : (

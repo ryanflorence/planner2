@@ -8,18 +8,21 @@
   - [x] Create user
   - [x] Create db session
   - [x] Put db session id in cookie
-- [ ] Update `requireUser`
-  - [ ] get session id from cookie
-  - [ ] look up session in db
-- [ ] Create logout button
-- [ ] Update login page
-  - [ ] check for user session first
-    - [ ] redirect if found
-  - [ ] put required form stuff back
-  - [ ] create db session
-  - [ ] Redirect to requested page (use sergio's redirectBack?)
+- [x] Update `requireUser`
+  - [x] get session id from cookie
+  - [x] look up session in db
+- [x] Update login page
+  - [x] put required form stuff back
+  - [x] compare hashed passwords
+  - [x] create db session
+  - [x] Redirect to requested page (use sergio's redirectBack?)
+  - [x] check for user session first
+    - [x] redirect if found
+- [x] Create logout button
+- [ ] Add `withSession` helper and clean all that up
 - [ ] Style that crap
 
 ## Goodies
 
+- [ ] Checkbox to show password as you type
 - [ ] Tell the user the email is taken already
