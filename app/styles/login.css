@@ -1,5 +1,12 @@
 main {
   padding: 2rem;
+  width: 400px;
+  margin: auto;
+  padding-bottom: 20rem;
+}
+
+h1 {
+  text-align: center;
 }
 
 [data-fade="false"] {

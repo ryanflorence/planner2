@@ -18,13 +18,14 @@
     --base0F: #d19a66;
   }
 }
+
 @media (prefers-color-scheme: light) {
   :root {
-    --base00: #f2f2f2;
-    --base01: #e0e0e0;
-    --base02: #d6d6d6;
-    --base03: #8e908c;
-    --base04: #969896;
+    --base00: #ffffff;
+    --base01: #f2f2f2;
+    --base02: #e0e0e0;
+    --base03: #c6c6c6;
+    --base04: #8e908c;
     --base05: #4d4d4c;
     --base06: #282a2e;
     --base07: #1d1f21;
@@ -49,9 +50,13 @@ body {
   height: 100vh;
   grid-template-rows: auto 1fr;
   margin: 0;
-  background: var(--base00);
+  background: var(--base01);
   color: var(--base07);
   overflow: hidden;
+}
+
+h1 {
+  letter-spacing: -0.05rem;
 }
 
 body > header {
@@ -96,4 +101,29 @@ body > header > nav > a.active {
   font-size: 2rem;
   padding-bottom: 10rem;
   box-sizing: border-box;
+}
+
+/* FORMS */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+button {
+  font: inherit;
+  font-size: 0.9rem;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  border: solid 1px;
+  box-sizing: border-box;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  background-color: var(--base00);
+  border-color: var(--base03);
+}
+
+button {
+  background-color: var(--base02);
+  border-color: var(--base04);
 }

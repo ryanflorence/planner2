@@ -55,7 +55,7 @@ section nav a.active {
 
 section nav form {
   margin-top: 1.5rem;
-  border-top: solid 1px var(--base01);
+  border-top: solid 1px var(--base02);
   padding: 1.5rem 0rem;
 }
 
@@ -81,6 +81,7 @@ section nav input[type="text"] {
   background: var(--base01);
   color: inherit;
 }
+
 section nav input[type="text"]:focus {
   background: var(--base00);
 }

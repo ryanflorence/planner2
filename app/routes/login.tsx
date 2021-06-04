@@ -131,7 +131,7 @@ export default function Login() {
       <h1>Login</h1>
       {session.message && <p>{session.message}</p>}
       {session.error && <p>{session.error}</p>}
-      <Form method="post">
+      <Form className="login" method="post">
         <p>
           <label>
             Email Address:
